@@ -10,4 +10,9 @@ return {
     event = "VeryLazy",
     config = require "user.plugins.configs.neogit"
   },
+  {
+  "ThePrimeagen/harpoon",
+    event = "VeryLazy",
+    config = require "user.plugins.configs.harpoon"
+  },
 }
