@@ -1,5 +1,10 @@
 return {
   {
+    "dkarter/bullets.vim",
+    event = "VeryLazy",
+    config = require "user.plugins.configs.bullets"
+  },
+  {
     "github/copilot.vim",
     event = "VeryLazy",
     config = require "user.plugins.configs.copilot"
