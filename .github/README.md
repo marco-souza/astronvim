@@ -11,6 +11,12 @@ mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 ```
 
+#### Simple Install
+
+```shell
+curl -s https://raw.githubusercontent.com/marco-souza/astronvim/main/install.sh | sh
+```
+
 #### Clone AstroNvim
 
 ```shell
@@ -26,7 +32,7 @@ You can also just clone this repository directly if you do not want to track you
 #### Clone the repository
 
 ```shell
-git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim/lua/user
+git clone https://github.com/marco-souza/astronvim ~/.config/nvim/lua/user
 ```
 
 #### Start Neovim
