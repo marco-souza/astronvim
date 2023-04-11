@@ -25,4 +25,10 @@ return {
     event = "VeryLazy",
     config = require "user.plugins.configs.harpoon"
   },
+  {
+    "aca/emmet-ls",
+    event = "VeryLazy",
+    config = require "user.plugins.configs.emmet"
+  },
 }
+
