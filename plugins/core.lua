@@ -5,11 +5,6 @@ return {
     config = require "user.plugins.configs.bullets"
   },
   {
-    "github/copilot.vim",
-    event = "VeryLazy",
-    config = require "user.plugins.configs.copilot"
-  },
-  {
     "TimUntersberger/neogit",
     event = "VeryLazy",
     config = require "user.plugins.configs.neogit"
