@@ -1,5 +1,10 @@
 return {
   {
+    "windwp/nvim-ts-autotag",
+    event = "VeryLazy",
+    config = require "user.plugins.configs.autotag"
+  },
+  {
     "dkarter/bullets.vim",
     event = "VeryLazy",
     config = require "user.plugins.configs.bullets"
