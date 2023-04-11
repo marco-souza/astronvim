@@ -25,5 +25,10 @@ return {
     event = "VeryLazy",
     config = require "user.plugins.configs.emmet"
   },
+  {
+    "wakatime/vim-wakatime",
+    event = "VeryLazy",
+    config = require "user.plugins.configs.wakatime"
+  },
 }
 
