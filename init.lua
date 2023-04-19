@@ -20,6 +20,11 @@ return {
   -- Set colorscheme to use
   colorscheme = "astrodark",
 
+  -- Set tabs
+  expandtab = true,
+  tabstop = 2,
+  shiftwidth = 2,
+
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = true,
