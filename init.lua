@@ -47,7 +47,7 @@ return {
       disabled = { -- disable formatting capabilities for the listed language servers
         -- "sumneko_lua",
       },
-      timeout_ms = 1000, -- default format timeout
+      timeout_ms = 300, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
@@ -55,6 +55,26 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+    },
+    -- custom configs
+    config = {
+      -- for deno
+      denols = function(opts)
+        opts.root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+        return opts
+      end,
+      -- for node (javascript/typescript)
+      tsserver = function(opts)
+        opts.root_dir = require("lspconfig.util").root_pattern("package.json")
+        return opts
+      end,
+      -- for eslint
+      eslint = function(opts)
+        opts.root_dir = require("lspconfig.util").root_pattern(
+          "package.json", ".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml",
+        ),
+        return opts
+      end,
     },
   },
 
