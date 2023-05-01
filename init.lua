@@ -54,7 +54,12 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      "denols",
+      "eslint",
+      "pyright",
+      "emmet_ls",
+      "tsserver",
+      "tailwindcss",
     },
     -- custom configs
     config = {
@@ -70,9 +75,7 @@ return {
       end,
       -- for eslint
       eslint = function(opts)
-        opts.root_dir = require("lspconfig.util").root_pattern(
-          "package.json", ".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml",
-        ),
+        opts.root_dir = require("lspconfig.util").root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml")
         return opts
       end,
     },
