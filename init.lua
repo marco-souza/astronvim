@@ -75,7 +75,7 @@ return {
       end,
       -- for eslint
       eslint = function(opts)
-        opts.root_dir = require("lspconfig.util").root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml")
+        opts.root_dir = require("lspconfig.util").root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml", ".eslintrc.cjs")
         return opts
       end,
     },
