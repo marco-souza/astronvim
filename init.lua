@@ -1,3 +1,7 @@
+function is_deno_project()
+  return vim.fs.find'deno.json' or vim.fs.find'deno.jsonc'
+end
+
 return {
   -- Configure AstroNvim updates
   updater = {
@@ -65,46 +69,60 @@ return {
     --
     -- ref: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     config = {
-      -- for deno
-      denols = function(opts)
-        -- setup
-        require'lspconfig'.denols.setup{}
-
-        opts.root_dir = require'lspconfig.util'.root_pattern("deno.json", "deno.jsonc")
-        opts.filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "json" }
-        opts.init_options = {
-          enable = true,
-          unstable = true,
-        }
-
-        return opts
-      end,
       -- for node (javascript/typescript)
-      tsserver = function(opts)
-        opts.root_dir = require'lspconfig.util'.root_pattern("package.json")
-        return opts
+      tsserver = function()
+        return {
+          root_dir = require'lspconfig.util'.root_pattern("package.json", "tsconfig.json", "jsconfig.json"),
+          single_file_support = false,
+        }
       end,
-      -- for eslint
-      eslint = function(opts)
-        -- disable if deno
-        if vim.fs.find'deno.json' or vim.fs.find'deno.jsonc' then
-          return opts
-        end
 
-        -- setup
-        require'lspconfig'.eslint.setup({
+      -- for eslint
+      eslint = function()
+        return {
+          root_dir = require'lspconfig.util'.root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml", ".eslintrc.cjs"),
           on_attach = function(client, bufnr)
             vim.api.nvim_create_autocmd("BufWritePre", {
               buffer = bufnr,
               command = "EslintFixAll",
             })
           end,
-        })
+        }
+      end,
 
-        opts.root_dir = require'lspconfig.util'.root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml", ".eslintrc.cjs")
-        return opts
+      -- for deno
+      denols = function()
+        return {
+          root_dir = require'lspconfig.util'.root_pattern("deno.json", "deno.jsonc"),
+          filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "json" },
+          init_options = {
+            enable = true,
+            unstable = true,
+          },
+          init_options = {
+            lint = true,
+          },
+        }
       end,
     },
+
+    setup_handlers = {
+      tsserver = function(_, opts)
+        -- disable if deno
+        if is_deno_project() then
+          return
+        end
+        require("lspconfig").tsserver.setup { server = opts }
+      end,
+
+      eslint = function(_, opts)
+        -- disable if deno
+        if is_deno_project() then
+          return
+        end
+        require("lspconfig").eslint.setup { server = opts }
+      end,
+    }
   },
 
   -- Configure require("lazy").setup() options
