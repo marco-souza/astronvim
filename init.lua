@@ -96,11 +96,9 @@ return {
           root_dir = require'lspconfig.util'.root_pattern("deno.json", "deno.jsonc"),
           filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "json" },
           init_options = {
+            lint = true,
             enable = true,
             unstable = true,
-          },
-          init_options = {
-            lint = true,
           },
         }
       end,
