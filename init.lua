@@ -62,20 +62,46 @@ return {
       "tailwindcss",
     },
     -- custom configs
+    --
+    -- ref: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     config = {
       -- for deno
       denols = function(opts)
-        opts.root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+        -- setup
+        require'lspconfig'.denols.setup{}
+
+        opts.root_dir = require'lspconfig.util'.root_pattern("deno.json", "deno.jsonc")
+        opts.filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "json" }
+        opts.init_options = {
+          enable = true,
+          unstable = true,
+        }
+
         return opts
       end,
       -- for node (javascript/typescript)
       tsserver = function(opts)
-        opts.root_dir = require("lspconfig.util").root_pattern("package.json")
+        opts.root_dir = require'lspconfig.util'.root_pattern("package.json")
         return opts
       end,
       -- for eslint
       eslint = function(opts)
-        opts.root_dir = require("lspconfig.util").root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml", ".eslintrc.cjs")
+        -- disable if deno
+        if vim.fs.find'deno.json' or vim.fs.find'deno.jsonc' then
+          return opts
+        end
+
+        -- setup
+        require'lspconfig'.eslint.setup({
+          on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              buffer = bufnr,
+              command = "EslintFixAll",
+            })
+          end,
+        })
+
+        opts.root_dir = require'lspconfig.util'.root_pattern(".eslintrc.json", ".eslintrc.js", ".eslintrc", ".eslintrc.yml", ".eslintrc.yaml", ".eslintrc.cjs")
         return opts
       end,
     },
