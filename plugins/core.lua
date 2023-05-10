@@ -35,5 +35,6 @@ return {
     event = "VeryLazy",
     config = require "user.plugins.configs.wakatime"
   },
+  { "folke/tokyonight.nvim" }
 }
 
