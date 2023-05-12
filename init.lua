@@ -1,5 +1,11 @@
 function is_deno_project()
-  return vim.fs.find'deno.json' or vim.fs.find'deno.jsonc'
+  local files = vim.fs.find(
+    {'deno.json', 'deno.jsonc'},
+    { upward = true }
+  )
+  -- if table has something, return true
+  for _ in pairs(files) do return true end
+  return false
 end
 
 return {
@@ -97,7 +103,7 @@ return {
           filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "json" },
           init_options = {
             lint = true,
-            enable = true,
+            enable = is_deno_project(),
             unstable = true,
           },
         }
@@ -105,20 +111,25 @@ return {
     },
 
     setup_handlers = {
-      tsserver = function(_, opts)
+      denols = function(_, opts)
         -- disable if deno
         if is_deno_project() then
-          return
+          require("lspconfig").denols.setup { server = opts }
         end
-        require("lspconfig").tsserver.setup { server = opts }
+      end,
+
+      tsserver = function(_, opts)
+        -- disable if deno
+        if not is_deno_project() then
+          require("lspconfig").tsserver.setup { server = opts }
+        end
       end,
 
       eslint = function(_, opts)
         -- disable if deno
-        if is_deno_project() then
-          return
+        if not is_deno_project() then
+          require("lspconfig").eslint.setup { server = opts }
         end
-        require("lspconfig").eslint.setup { server = opts }
       end,
     }
   },
