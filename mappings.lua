@@ -4,6 +4,10 @@ local harpoon_ui = require('harpoon.ui')
 
 return {
   n = {
+    -- lsp
+    ["gr"] = { vim.lsp.buf.rename, desc = "Rename variable name" },
+    ["gd"] = { vim.lsp.buf.definition, desc = "Go to Definition" },
+    ["gD"] = { vim.lsp.buf.declaration, desc = "Go to Declaration" },
     -- neogit
     ["<leader>gg"] = { function() require("neogit").open() end, desc = "Manage Git (Neogit)" },
     -- Harpoon
