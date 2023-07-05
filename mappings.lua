@@ -5,6 +5,7 @@ local harpoon_ui = require('harpoon.ui')
 return {
   n = {
     -- lsp
+    ["gf"] = { vim.lsp.buf.format, desc = "Rename variable name" },
     ["gr"] = { vim.lsp.buf.rename, desc = "Rename variable name" },
     ["gd"] = { vim.lsp.buf.definition, desc = "Go to Definition" },
     ["gD"] = { vim.lsp.buf.declaration, desc = "Go to Declaration" },
