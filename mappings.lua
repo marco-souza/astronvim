@@ -8,7 +8,7 @@ return {
     ["gf"] = { vim.lsp.buf.format, desc = "Rename variable name" },
     ["gr"] = { vim.lsp.buf.rename, desc = "Rename variable name" },
     ["gd"] = { vim.lsp.buf.definition, desc = "Go to Definition" },
-    ["gD"] = { vim.lsp.buf.declaration, desc = "Go to Declaration" },
+    ["gD"] = { vim.lsp.buf.references, desc = "Go to References" },
     -- neogit
     ["<leader>gg"] = { function() require("neogit").open() end, desc = "Manage Git (Neogit)" },
     -- Harpoon
